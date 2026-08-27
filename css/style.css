@@ -330,9 +330,13 @@ p{ margin:0; }
 
 /* ============================================================
    Complement layer — decorative holographic artwork (shields,
-   keys, seals) that floats ABOVE the photo background but
-   BEHIND the content. Two-part structure so two independent
-   animations can run without fighting each other:
+   keys, seals) that lives in the "black zone" gutters outside
+   the 1180px content container, one copy per side, so it never
+   overlaps text, cards or the readable column. Only shows once
+   the viewport is wide enough to actually have that empty
+   margin to spare; scales up gracefully on very wide screens.
+   Two-part structure so two independent animations can run
+   without fighting each other:
      .complement        — outer wrapper, JS writes the scroll-
                            driven parallax transform here
                            (translate + 3D rotation + scale)
@@ -346,6 +350,8 @@ p{ margin:0; }
   pointer-events:none;
   will-change:transform;
   transform-style:preserve-3d;
+  display:none;
+  width:120px;
 }
 .complement-inner{
   width:100%;
@@ -353,19 +359,48 @@ p{ margin:0; }
   background-size:contain;
   background-repeat:no-repeat;
   background-position:center;
-  opacity:.92;
-  filter:drop-shadow(0 22px 46px rgba(0,0,0,.6)) drop-shadow(0 0 34px rgba(95,212,255,.18));
+  opacity:.95;
+  filter:drop-shadow(0 22px 46px rgba(0,0,0,.6)) drop-shadow(0 0 34px rgba(95,212,255,.2));
   transform-style:preserve-3d;
   animation:complementFloat 8s ease-in-out infinite;
 }
+.complement--mirror .complement-inner{ animation-name:complementFloatMirror; }
+
+.complement--left{ left:16px; }
+.complement--right{ right:16px; }
+
+/* Only render once there's genuine empty margin beyond the 1180px
+   container (container + its own 28px side padding ≈ 1236px), and
+   scale up as the gutter grows so it always reads as intentional,
+   never cramped. */
+@media (min-width:1360px){
+  .complement{ display:block; width:112px; }
+  .complement--left{ left:22px; }
+  .complement--right{ right:22px; }
+}
+@media (min-width:1600px){
+  .complement{ width:150px; }
+  .complement--left{ left:34px; }
+  .complement--right{ right:34px; }
+}
+@media (min-width:1900px){
+  .complement{ width:190px; }
+  .complement--left{ left:54px; }
+  .complement--right{ right:54px; }
+}
+
 @keyframes complementFloat{
   0%{   transform:translateY(0)     rotateY(-7deg) rotateX(4deg)  translateZ(0); }
   50%{  transform:translateY(-18px) rotateY(7deg)  rotateX(-4deg) translateZ(26px); }
   100%{ transform:translateY(0)     rotateY(-7deg) rotateX(4deg)  translateZ(0); }
 }
-@media (max-width:900px){ .complement{ display:none; } }
+@keyframes complementFloatMirror{
+  0%{   transform:scaleX(-1) translateY(0)     rotateY(7deg)  rotateX(4deg)  translateZ(0); }
+  50%{  transform:scaleX(-1) translateY(-18px) rotateY(-7deg) rotateX(-4deg) translateZ(26px); }
+  100%{ transform:scaleX(-1) translateY(0)     rotateY(7deg)  rotateX(4deg)  translateZ(0); }
+}
 @media (prefers-reduced-motion: reduce){
-  .complement{ display:none; }
+  .complement{ display:none !important; }
   .complement-inner{ animation:none; }
 }
 
