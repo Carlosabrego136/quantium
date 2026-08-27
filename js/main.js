@@ -83,8 +83,24 @@
     elLayers.forEach(function (el) {
       var speed = parseFloat(el.getAttribute("data-speed")) || 0.04;
       var rect = el.getBoundingClientRect();
-      var offset = (rect.top + rect.height / 2 - vh / 2) * speed;
-      el.style.transform = "translate3d(0," + offset.toFixed(1) + "px,0)";
+      var centerDelta = rect.top + rect.height / 2 - vh / 2;
+      var offset = centerDelta * speed;
+
+      if (el.classList.contains("complement")) {
+        /* Complements get real 3D depth on top of the drift: as they
+           travel from the edge of the viewport toward its center they
+           rotate in from an angle and settle, then rotate back out the
+           other side — like a holographic panel reacting to the scroll. */
+        var norm = Math.max(-1, Math.min(1, centerDelta / (vh / 2)));
+        var rotateY = (norm * -16).toFixed(1);
+        var rotateX = (norm * 9).toFixed(1);
+        var scale = (1 + (1 - Math.abs(norm)) * 0.08).toFixed(3);
+        el.style.transform =
+          "translate3d(0," + offset.toFixed(1) + "px,0) " +
+          "rotateY(" + rotateY + "deg) rotateX(" + rotateX + "deg) scale(" + scale + ")";
+      } else {
+        el.style.transform = "translate3d(0," + offset.toFixed(1) + "px,0)";
+      }
     });
 
     ticking = false;
