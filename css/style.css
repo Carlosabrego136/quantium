@@ -18,9 +18,11 @@
   --danger:       #ff5b6a;
   --ok:           #37d68a;
 
-  --text-hi:      #eef4fb;
-  --text-mid:     #a9b8cc;
-  --text-dim:     #6c7c92;
+  --text-hi:      #ffffff;
+  --text-mid:     #d7e2f0;
+  --text-dim:     #9db0c6;
+
+  --shadow-txt:   0 2px 4px rgba(0,0,0,.65), 0 8px 24px rgba(0,0,0,.55);
 
   --font-display: 'Space Grotesk', 'Inter', sans-serif;
   --font-body:    'Inter', sans-serif;
@@ -224,7 +226,7 @@ p{ margin:0; }
    ============================================================ */
 .parallax-layer{
   position:absolute;
-  inset:-22% -10%;
+  inset:-32% -14%;
   background-size:cover;
   background-position:center 18%;
   background-repeat:no-repeat;
@@ -239,6 +241,17 @@ p{ margin:0; }
   mix-blend-mode:screen;
   transform-origin:center;
 }
+/* Softer, farther-away treatment — use on sections where the source photo
+   reads as too close / too "zoomed" (e.g. .diferencia). Pulls contrast and
+   saturation back down and reduces the overscan so the image reads sharp
+   and distant instead of like a cropped macro shot. */
+.parallax-layer--natural{
+  filter:saturate(1.04) contrast(1.0) brightness(0.98) blur(0px);
+}
+.parallax-layer--tight{
+  inset:-16% -6%;
+  background-position:center 30%;
+}
 
 /* ============================================================
    Eyebrow / typography helpers
@@ -251,10 +264,13 @@ p{ margin:0; }
   text-transform:uppercase;
   color:var(--cyan-soft);
   margin-bottom:14px;
-  background:rgba(4,8,13,.6);
+  background:rgba(3,6,10,.75);
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
   padding:7px 14px;
   border-radius:999px;
-  border:1px solid rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);
+  text-shadow:0 1px 6px rgba(0,0,0,.6);
 }
 .eyebrow-dot{
   width:6px; height:6px; border-radius:50%;
@@ -267,11 +283,14 @@ p{ margin:0; }
   font-weight:600;
   max-width:18ch;
   margin-bottom:18px;
-  background:rgba(4,8,13,.5);
+  background:rgba(3,6,10,.7);
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
   padding:0.15em 0.35em;
   border-radius:10px;
   box-decoration-break:clone;
   -webkit-box-decoration-break:clone;
+  text-shadow:var(--shadow-txt);
 }
 .section-lead{
   font-size:1.02rem;
@@ -279,11 +298,14 @@ p{ margin:0; }
   max-width:56ch;
   line-height:1.65;
   margin-bottom:44px;
-  background:rgba(4,8,13,.55);
+  background:rgba(3,6,10,.72);
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
   padding:0.2em 0.4em;
   border-radius:8px;
   box-decoration-break:clone;
   -webkit-box-decoration-break:clone;
+  text-shadow:var(--shadow-txt);
 }
 .text-accent{ color:var(--cyan-soft); }
 .text-accent-soft{ color:var(--gold-soft); }
@@ -298,12 +320,35 @@ p{ margin:0; }
   position:absolute;
   pointer-events:none;
   color:var(--cyan);
-  opacity:.16;
+  opacity:.22;
   z-index:0;
   will-change:transform;
 }
 .drift svg{ width:100%; height:100%; }
+.drift--gold{ color:var(--gold); }
 @media (max-width:900px){ .drift{ display:none; } }
+
+/* ============================================================
+   Complement layer — optional decorative artwork (padlocks,
+   holo-shields, data glyphs) that floats ABOVE the photo
+   background but BEHIND the content, drifting at its own
+   parallax speed for extra depth. Drop a transparent PNG at
+   the referenced path; if the file is missing the slot simply
+   stays invisible, so it's safe to ship before assets exist.
+   ============================================================ */
+.complement{
+  position:absolute;
+  z-index:1;
+  pointer-events:none;
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center;
+  opacity:.9;
+  filter:drop-shadow(0 18px 40px rgba(0,0,0,.55));
+  will-change:transform;
+}
+@media (max-width:900px){ .complement{ display:none; } }
+@media (prefers-reduced-motion: reduce){ .complement{ display:none; } }
 
 /* ============================================================
    Sections (generic)
@@ -366,11 +411,15 @@ p{ margin:0; }
   letter-spacing:-.01em;
   margin:0 auto 22px;
   max-width:23ch;
-  background:rgba(4,8,13,.48);
+  color:var(--text-hi);
+  background:rgba(3,6,10,.6);
+  backdrop-filter:blur(5px);
+  -webkit-backdrop-filter:blur(5px);
   padding:0.08em 0.3em;
   border-radius:14px;
   box-decoration-break:clone;
   -webkit-box-decoration-break:clone;
+  text-shadow:var(--shadow-txt);
 }
 .hero-sub{
   font-size:1.08rem;
@@ -378,11 +427,14 @@ p{ margin:0; }
   max-width:52ch;
   margin:0 auto 36px;
   line-height:1.7;
-  background:rgba(4,8,13,.55);
+  background:rgba(3,6,10,.68);
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
   padding:0.2em 0.4em;
   border-radius:8px;
   box-decoration-break:clone;
   -webkit-box-decoration-break:clone;
+  text-shadow:var(--shadow-txt);
 }
 .hero-actions{
   display:flex; gap:16px; justify-content:center; flex-wrap:wrap;
@@ -396,7 +448,9 @@ p{ margin:0; }
   max-width:100%;
   width:fit-content;
   margin:0 auto;
-  background:rgba(4,8,13,.55);
+  background:rgba(3,6,10,.65);
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
   padding:0.35em 0.7em;
   border-radius:999px;
 }
@@ -471,11 +525,14 @@ p{ margin:0; }
   max-width:44ch;
   margin:0 auto;
   line-height:1.5;
-  background:rgba(4,8,13,.5);
+  background:rgba(3,6,10,.62);
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
   padding:0.3em 0.5em;
   border-radius:10px;
   box-decoration-break:clone;
   -webkit-box-decoration-break:clone;
+  text-shadow:var(--shadow-txt);
 }
 
 /* ============================================================
@@ -628,8 +685,9 @@ p{ margin:0; }
   border:1px solid var(--line-strong);
   border-radius:var(--radius);
   margin-bottom:36px;
-  background:rgba(6,10,16,.82);
-  backdrop-filter:blur(6px);
+  background:rgba(5,8,13,.92);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
 }
 .compare-table{
   width:100%; border-collapse:collapse; min-width:520px;
@@ -666,11 +724,12 @@ p{ margin:0; }
   padding:20px 24px;
   border:1px solid var(--line-strong);
   border-radius:var(--radius);
-  background:rgba(10,14,10,.7);
-  backdrop-filter:blur(6px);
+  background:rgba(6,10,8,.82);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
 }
 .cert-icon{ width:34px; height:34px; color:var(--gold); flex:none; }
-.cert-badge p{ font-size:.88rem; color:var(--text-mid); line-height:1.5; text-shadow:0 1px 8px rgba(3,6,10,.7); }
+.cert-badge p{ font-size:.88rem; color:var(--text-mid); line-height:1.5; text-shadow:var(--shadow-txt); }
 .cert-badge strong{ color:var(--gold-soft); }
 
 /* ============================================================

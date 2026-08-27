@@ -74,9 +74,10 @@
 
     bgLayers.forEach(function (layer) {
       var speed = parseFloat(layer.getAttribute("data-speed")) || 0.15;
+      var scale = parseFloat(layer.getAttribute("data-scale")) || 1.08;
       var rect = layer.parentElement.getBoundingClientRect();
       var offset = (rect.top + rect.height / 2 - vh / 2) * speed;
-      layer.style.transform = "translate3d(0," + offset.toFixed(1) + "px,0) scale(1.08)";
+      layer.style.transform = "translate3d(0," + offset.toFixed(1) + "px,0) scale(" + scale + ")";
     });
 
     elLayers.forEach(function (el) {
