@@ -35,22 +35,32 @@
   }
 
   /* ---------------------------------------------------------
-     Pronounced parallax — layered backgrounds move at
-     different speeds than the scroll itself (desktop only;
-     mobile keeps the backgrounds static per brief).
+     Pronounced parallax — layered backgrounds AND individual
+     elements (headings, text, cards, floating accents) each
+     drift at their own speed as the page scrolls. Desktop
+     only; mobile keeps everything static per brief.
   --------------------------------------------------------- */
-  var layers = Array.prototype.slice.call(document.querySelectorAll(".parallax-layer"));
+  var bgLayers = Array.prototype.slice.call(document.querySelectorAll(".parallax-layer"));
+  var elLayers = Array.prototype.slice.call(document.querySelectorAll("[data-parallax]"));
   var ticking = false;
 
   function updateParallax() {
     var vh = window.innerHeight;
-    layers.forEach(function (layer) {
+
+    bgLayers.forEach(function (layer) {
       var speed = parseFloat(layer.getAttribute("data-speed")) || 0.15;
       var rect = layer.parentElement.getBoundingClientRect();
-      // distance of the section's center from viewport center, scaled
       var offset = (rect.top + rect.height / 2 - vh / 2) * speed;
       layer.style.transform = "translate3d(0," + offset.toFixed(1) + "px,0) scale(1.08)";
     });
+
+    elLayers.forEach(function (el) {
+      var speed = parseFloat(el.getAttribute("data-speed")) || 0.04;
+      var rect = el.getBoundingClientRect();
+      var offset = (rect.top + rect.height / 2 - vh / 2) * speed;
+      el.style.transform = "translate3d(0," + offset.toFixed(1) + "px,0)";
+    });
+
     ticking = false;
   }
 
@@ -61,7 +71,7 @@
     }
   }
 
-  if (isDesktop && !reduceMotion && layers.length) {
+  if (isDesktop && !reduceMotion && (bgLayers.length || elLayers.length)) {
     updateParallax();
     window.addEventListener("scroll", requestParallax, { passive: true });
     window.addEventListener("resize", requestParallax);
