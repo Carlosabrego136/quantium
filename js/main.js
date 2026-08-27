@@ -2,7 +2,32 @@
   "use strict";
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var isDesktop = window.matchMedia("(min-width: 721px)").matches;
+  var desktopMedia = window.matchMedia("(min-width: 721px)");
+  var isDesktop = desktopMedia.matches;
+
+  /* ---------------------------------------------------------
+     Responsive backgrounds — desktop gets the HD "-pc" images,
+     mobile/tablet keeps the portrait originals. Swapped by JS
+     so each device only ever downloads the version it needs.
+  --------------------------------------------------------- */
+  var bgSwapEls = Array.prototype.slice.call(document.querySelectorAll("[data-bg-desktop]"));
+
+  function applyResponsiveBackgrounds() {
+    var desktop = desktopMedia.matches;
+    bgSwapEls.forEach(function (el) {
+      var src = desktop ? el.getAttribute("data-bg-desktop") : el.getAttribute("data-bg-mobile");
+      if (src) {
+        el.style.backgroundImage = "url('" + src + "')";
+      }
+    });
+  }
+  applyResponsiveBackgrounds();
+
+  var bgResizeTimer = null;
+  window.addEventListener("resize", function () {
+    clearTimeout(bgResizeTimer);
+    bgResizeTimer = setTimeout(applyResponsiveBackgrounds, 200);
+  });
 
   /* ---------------------------------------------------------
      Nav: scrolled state + mobile toggle
