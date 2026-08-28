@@ -233,8 +233,115 @@
       if (document.hidden) {
         clearInterval(matrixInterval);
       } else {
-        matrixInterval = setInterval(drawMatrix, 60);
+        matrixInterval = setInterval(drawMatrix, isDesktop ? 60 : 140);
       }
+    });
+  }
+
+  /* ---------------------------------------------------------
+     Security constellation — sparse glowing nodes drifting
+     slowly, with faint threads linking nearby points. Reads as
+     a quiet "network map" ambience rather than a busy effect;
+     density and speed stay low on purpose.
+  --------------------------------------------------------- */
+  var networkCanvas = document.getElementById("networkCanvas");
+  if (networkCanvas && !reduceMotion) {
+    var nctx = networkCanvas.getContext("2d");
+    var nDpr = Math.min(window.devicePixelRatio || 1, 2);
+    var nodes = [];
+    var nodeColors = ["95,212,255", "232,185,94"];
+    var linkDist = 0;
+
+    function sizeNetworkCanvas() {
+      var w = window.innerWidth;
+      var h = window.innerHeight;
+      networkCanvas.width = w * nDpr;
+      networkCanvas.height = h * nDpr;
+      networkCanvas.style.width = w + "px";
+      networkCanvas.style.height = h + "px";
+      nctx.setTransform(nDpr, 0, 0, nDpr, 0, 0);
+
+      var density = isDesktop ? 26000 : 42000;
+      var count = Math.max(14, Math.min(46, Math.round((w * h) / density)));
+      linkDist = Math.min(180, Math.max(110, w / 8));
+
+      nodes = [];
+      for (var i = 0; i < count; i++) {
+        nodes.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.12,
+          vy: (Math.random() - 0.5) * 0.12,
+          r: Math.random() * 1.6 + 0.9,
+          c: nodeColors[Math.random() < 0.82 ? 0 : 1],
+          pulse: Math.random() * Math.PI * 2
+        });
+      }
+    }
+    sizeNetworkCanvas();
+
+    var networkResizeTimer = null;
+    window.addEventListener("resize", function () {
+      clearTimeout(networkResizeTimer);
+      networkResizeTimer = setTimeout(sizeNetworkCanvas, 200);
+    });
+
+    function drawNetwork() {
+      var w = window.innerWidth;
+      var h = window.innerHeight;
+      nctx.clearRect(0, 0, w, h);
+
+      for (var i = 0; i < nodes.length; i++) {
+        var a = nodes[i];
+        a.x += a.vx;
+        a.y += a.vy;
+        a.pulse += 0.02;
+        if (a.x < -20) a.x = w + 20;
+        if (a.x > w + 20) a.x = -20;
+        if (a.y < -20) a.y = h + 20;
+        if (a.y > h + 20) a.y = -20;
+
+        for (var j = i + 1; j < nodes.length; j++) {
+          var b = nodes[j];
+          var dx = a.x - b.x;
+          var dy = a.y - b.y;
+          var dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < linkDist) {
+            var alpha = (1 - dist / linkDist) * 0.16;
+            nctx.strokeStyle = "rgba(" + a.c + "," + alpha.toFixed(3) + ")";
+            nctx.lineWidth = 1;
+            nctx.beginPath();
+            nctx.moveTo(a.x, a.y);
+            nctx.lineTo(b.x, b.y);
+            nctx.stroke();
+          }
+        }
+      }
+
+      for (var k = 0; k < nodes.length; k++) {
+        var n = nodes[k];
+        var glow = 0.55 + Math.sin(n.pulse) * 0.35;
+        nctx.beginPath();
+        nctx.fillStyle = "rgba(" + n.c + "," + (0.55 * glow).toFixed(3) + ")";
+        nctx.shadowColor = "rgba(" + n.c + ",0.8)";
+        nctx.shadowBlur = 6;
+        nctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+        nctx.fill();
+      }
+      nctx.shadowBlur = 0;
+    }
+
+    var networkRunning = true;
+    function networkLoop() {
+      if (!networkRunning) return;
+      drawNetwork();
+      window.requestAnimationFrame(networkLoop);
+    }
+    networkLoop();
+
+    document.addEventListener("visibilitychange", function () {
+      networkRunning = !document.hidden;
+      if (networkRunning) networkLoop();
     });
   }
 
