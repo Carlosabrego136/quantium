@@ -125,6 +125,21 @@
         <a href="#demo" class="btn btn-outline">Ver cómo detiene una grabación</a>
       </div>
       <p class="hero-note">Te responde una persona real en minutos — no un bot.</p>
+
+      <ul class="trust-strip" data-parallax data-speed="0.03">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3.5v5.2c0 4.6-3 8.6-7 9.8-4-1.2-7-5.2-7-9.8V6.5L12 3Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+          Creado por especialistas en ciberseguridad bancaria
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="13" rx="1.6" stroke="currentColor" stroke-width="1.4"/><path d="M8 21h8M12 17v4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          Ya funcionando en Windows · Mac próximamente
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 20V10l8-6 8 6v10" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M9 20v-6h6v6" stroke="currentColor" stroke-width="1.4"/></svg>
+          0 videos almacenados en servidores
+        </li>
+      </ul>
     </div>
 
     <div class="hero-hud" aria-hidden="true" data-parallax data-speed="0.12">
@@ -307,6 +322,50 @@
           <h3>Licencias inteligentes</h3>
           <p>Carga masiva por planilla, pruebas gratuitas con vencimiento automático y liberación de cupos por inactividad.</p>
         </article>
+        <article class="feature">
+          <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3.5v5.2c0 4.6-3 8.6-7 9.8-4-1.2-7-5.2-7-9.8V6.5L12 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9.2 12.3l1.9 1.9 3.7-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <h3>Bloqueador de piratería y analítica avanzada</h3>
+          <p>Detecta accesos irregulares, compartición de credenciales e intentos de ataque sobre tu contenido, con reportes claros de qué pasó y cuándo.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CAPAS DE SEGURIDAD ============ -->
+  <section class="section" id="capas">
+    <span class="drift" data-parallax data-speed="0.3" style="width:60px;height:60px;top:6%;left:6%;">
+      <svg viewBox="0 0 40 40" fill="none"><path d="M20 3 L35 11 V23 C35 31 28.5 36.5 20 38 C11.5 36.5 5 31 5 23 V11 Z" stroke="currentColor" stroke-width="1"/></svg>
+    </span>
+    <div class="container">
+      <p class="eyebrow" data-parallax data-speed="0.12">Cómo funciona por dentro</p>
+      <h2 class="section-title" data-parallax data-speed="0.035">Cuatro capas de seguridad</h2>
+      <p class="section-lead" data-parallax data-speed="-0.05">Cada video pasa por el mismo camino, capa por capa, antes de llegar a la pantalla de tu alumno.</p>
+
+      <div class="layers">
+        <article class="layer">
+          <span class="layer-node" aria-hidden="true"></span>
+          <span class="layer-index">CAPA 01</span>
+          <h3>Cifrado en el origen</h3>
+          <p>Tu video se encripta en tu propia máquina, antes de tocar cualquier servidor.</p>
+        </article>
+        <article class="layer">
+          <span class="layer-node" aria-hidden="true"></span>
+          <span class="layer-index">CAPA 02</span>
+          <h3>Distribución neutral</h3>
+          <p>El archivo cifrado no depende de dónde lo subas; sin licencia, es solo ruido.</p>
+        </article>
+        <article class="layer">
+          <span class="layer-node" aria-hidden="true"></span>
+          <span class="layer-index">CAPA 03</span>
+          <h3>Autenticación por reproducción</h3>
+          <p>Cada apertura valida la licencia del alumno en tiempo real.</p>
+        </article>
+        <article class="layer">
+          <span class="layer-node" aria-hidden="true"></span>
+          <span class="layer-index">CAPA 04</span>
+          <h3>Marca forense</h3>
+          <p>Toda reproducción autorizada queda firmada con los datos de quien la vio.</p>
+        </article>
       </div>
     </div>
   </section>
@@ -334,23 +393,23 @@
           <tbody>
             <tr>
               <th scope="row">¿Dónde viven tus videos?</th>
-              <td class="cell-bad">En sus servidores</td>
-              <td class="cell-good">Solo en tu equipo</td>
+              <td class="cell-bad" data-label="Plataformas en la nube">En sus servidores</td>
+              <td class="cell-good" data-label="Quantium Security">Solo en tu equipo</td>
             </tr>
             <tr>
               <th scope="row">Si los vulneran</th>
-              <td class="cell-bad">Tu contenido queda expuesto</td>
-              <td class="cell-good">No hay nada que filtrar</td>
+              <td class="cell-bad" data-label="Plataformas en la nube">Tu contenido queda expuesto</td>
+              <td class="cell-good" data-label="Quantium Security">No hay nada que filtrar</td>
             </tr>
             <tr>
               <th scope="row">Límite de peso o duración</th>
-              <td class="cell-bad">Sí, y se paga aparte</td>
-              <td class="cell-good">Sin límites</td>
+              <td class="cell-bad" data-label="Plataformas en la nube">Sí, y se paga aparte</td>
+              <td class="cell-good" data-label="Quantium Security">Sin límites</td>
             </tr>
             <tr>
               <th scope="row">¿Quién controla el acceso?</th>
-              <td class="cell-bad">Ellos</td>
-              <td class="cell-good">Tú, desde tu panel</td>
+              <td class="cell-bad" data-label="Plataformas en la nube">Ellos</td>
+              <td class="cell-good" data-label="Quantium Security">Tú, desde tu panel</td>
             </tr>
           </tbody>
         </table>
@@ -400,6 +459,97 @@
     </div>
   </section>
 
+  <!-- ============ CONTROL DE CONTENIDO ============ -->
+  <section class="section section-dark" id="control">
+    <div class="parallax-layer parallax-layer--dim parallax-layer--natural parallax-layer--tight" data-speed="0.26" data-scale="1.03" data-bg-desktop="assets/fondo1-pc.jpg" data-bg-mobile="assets/fondo1.jpg" style="background-image:url('assets/fondo1.jpg')"></div>
+    <span class="drift drift--gold" data-parallax data-speed="-0.24" style="width:40px;height:40px;top:10%;right:8%;">
+      <svg viewBox="0 0 40 40" fill="none"><path d="M20 3 L35 11 V23 C35 31 28.5 36.5 20 38 C11.5 36.5 5 31 5 23 V11 Z" stroke="currentColor" stroke-width="1"/></svg>
+    </span>
+    <div class="container">
+      <p class="eyebrow" data-parallax data-speed="0.12">Tu contenido, tus reglas</p>
+      <h2 class="section-title" data-parallax data-speed="0.035">Así controlas tu contenido</h2>
+
+      <div class="grid grid-3 feature-grid" data-parallax data-speed="0.04">
+        <article class="feature">
+          <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3.5v5.2c0 4.6-3 8.6-7 9.8-4-1.2-7-5.2-7-9.8V6.5L12 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
+          <h3>Control total sobre quién ve tu contenido</h3>
+          <p>Permisos por curso y por clase, con una marca de agua única para cada alumno.</p>
+        </article>
+        <article class="feature">
+          <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/></svg></span>
+          <h3>Visibilidad completa de cada reproducción</h3>
+          <p>Sabes quién vio qué, cuánto tiempo y desde dónde, sin excepciones.</p>
+        </article>
+        <article class="feature">
+          <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
+          <h3>Un clic y se acabó</h3>
+          <p>Vences licencias, bloqueas grabaciones y capturas al instante, desde tu panel.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DE CREADOR A CREADOR ============ -->
+  <section class="section" id="fundador">
+    <span class="drift" data-parallax data-speed="0.24" style="width:50px;height:50px;bottom:10%;left:7%;">
+      <svg viewBox="0 0 40 40" fill="none"><path d="M20 3 L35 11 V23 C35 31 28.5 36.5 20 38 C11.5 36.5 5 31 5 23 V11 Z" stroke="currentColor" stroke-width="1"/></svg>
+    </span>
+    <div class="container">
+      <p class="eyebrow" data-parallax data-speed="0.12">De creador a creador</p>
+      <h2 class="section-title" data-parallax data-speed="0.035">Por qué existe Quantium Security</h2>
+
+      <div class="founder-block" data-parallax data-speed="0.04">
+        <div class="founder-avatar" aria-hidden="true">HV</div>
+        <div class="founder-copy">
+          <p class="founder-quote">"Nosotros también vendemos cursos. Y sabemos lo que es ver el contenido propio &mdash;el que costó meses de grabación, edición y noches sin dormir&mdash; circulando gratis a los pocos días del lanzamiento.</p>
+          <p>Probamos plataformas "seguras". Todas pedían lo mismo: subir nuestros videos a sus servidores y confiar. No nos cerraba. ¿Por qué la seguridad de nuestro contenido tenía que depender de la nube de alguien más?</p>
+          <p>Así que construimos lo que no existía: protección real donde los videos nunca salen de tu máquina, y cada intento de robo queda con nombre y apellido. Primero lo usamos nosotros. Ahora lo ponemos en tus manos."</p>
+          <p class="founder-name">Hunab Villanueva <span>Fundador · Quantium Security</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PREGUNTAS FRECUENTES ============ -->
+  <section class="section section-dark" id="faq">
+    <div class="parallax-layer parallax-layer--dim parallax-layer--natural parallax-layer--tight" data-speed="0.24" data-scale="1.03" data-bg-desktop="assets/fondo3-pc.jpg" data-bg-mobile="assets/fondo3.jpg" style="background-image:url('assets/fondo3.jpg')"></div>
+    <div class="container">
+      <p class="eyebrow" data-parallax data-speed="0.12">Preguntas frecuentes</p>
+      <h2 class="section-title" data-parallax data-speed="0.035">Lo que todos preguntan</h2>
+
+      <div class="faq-list" data-parallax data-speed="0.04">
+        <details class="faq-item">
+          <summary>¿Dónde se guardan mis videos?<span class="faq-toggle" aria-hidden="true"></span></summary>
+          <p>En tu equipo y en el de tus alumnos, siempre encriptados. Nosotros no almacenamos ni vemos ninguno: como mucho conocemos el nombre del archivo.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Qué pasa si un alumno comparte su acceso con otra persona?<span class="faq-toggle" aria-hidden="true"></span></summary>
+          <p>Cada licencia está vinculada a un alumno. Si notas un uso irregular, puedes revocar el acceso desde el panel en un clic y emitir una licencia nueva.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Qué necesita mi alumno para ver los videos?<span class="faq-toggle" aria-hidden="true"></span></summary>
+          <p>Windows 10 o superior, o macOS 11+ (recomendado 12+). Mínimo 4 GB de RAM, recomendado 8 GB. Y su licencia activa, claro.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Funciona en celulares o tablets?<span class="faq-toggle" aria-hidden="true"></span></summary>
+          <p>No, y es una decisión de seguridad: las apps móviles abren la puerta a métodos de bypass que debilitarían la protección de todos.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Hay límite de videos, peso o calidad?<span class="faq-toggle" aria-hidden="true"></span></summary>
+          <p>No. Como todo se procesa en tu equipo, puedes encriptar la cantidad, duración y calidad que quieras (1080p, 4K...).</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Cómo se paga?<span class="faq-toggle" aria-hidden="true"></span></summary>
+          <p>Habla con nuestro equipo, cuéntanos qué vendes y cuántos alumnos tienes, y te proponemos el plan justo para tu caso.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Qué pasa si un alumno cambia de computadora?<span class="faq-toggle" aria-hidden="true"></span></summary>
+          <p>Liberas su licencia desde el panel en un clic y la activas en el equipo nuevo. También se libera sola por inactividad prolongada.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ CTA FINAL ============ -->
   <section class="section section-cta" id="cta-final">
     <div class="parallax-layer parallax-layer--dim" data-speed="0.26" data-scale="1.04" data-bg-desktop="assets/fondo2-pc.jpg" data-bg-mobile="assets/fondo2.jpg" style="background-image:url('assets/fondo2.jpg')"></div>
@@ -438,6 +588,7 @@
       <span class="brand-text">QUANTIUM<em>SECURITY</em></span>
     </a>
     <p class="footer-copy">© <span id="year"></span> Quantium Security. Todos los derechos reservados.</p>
+    <p class="footer-legal">Quantium Security no almacena ni accede al contenido de los videos encriptados. La responsabilidad sobre el contenido distribuido es exclusiva del usuario.</p>
     <div class="footer-links">
       <a href="#problema">El riesgo</a>
       <a href="#solucion">Cómo funciona</a>

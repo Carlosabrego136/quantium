@@ -107,7 +107,7 @@
   /* ---------------------------------------------------------
      Reveal on scroll
   --------------------------------------------------------- */
-  var revealTargets = document.querySelectorAll(".card, .feature, .step, .fit-card");
+  var revealTargets = document.querySelectorAll(".card, .feature, .step, .fit-card, .layer, .founder-block, .faq-item");
   if ("IntersectionObserver" in window && revealTargets.length) {
     var io = new IntersectionObserver(
       function (entries) {
