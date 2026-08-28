@@ -226,31 +226,33 @@ p{ margin:0; }
    ============================================================ */
 .parallax-layer{
   position:absolute;
-  inset:-32% -14%;
+  inset:-10% -6%;
   background-size:cover;
-  background-position:center 18%;
+  background-position:center 22%;
   background-repeat:no-repeat;
   will-change:transform;
   z-index:0;
-  transform:translate3d(0,0,0) scale(1.08);
-  filter:saturate(1.22) contrast(1.1) brightness(1.06);
+  transform:translate3d(0,0,0) scale(1.015);
+  filter:saturate(1.12) contrast(1.02) brightness(1.16);
+  -webkit-mask-image:linear-gradient(to bottom, transparent 0%, black 14%, black 86%, transparent 100%);
+  mask-image:linear-gradient(to bottom, transparent 0%, black 14%, black 86%, transparent 100%);
 }
-.parallax-layer--dim{ opacity:.72; }
+.parallax-layer--dim{ opacity:.78; }
 .parallax-layer--fore{
-  opacity:.28;
+  opacity:.2;
   mix-blend-mode:screen;
   transform-origin:center;
 }
 /* Softer, farther-away treatment — use on sections where the source photo
    reads as too close / too "zoomed" (e.g. .diferencia). Pulls contrast and
-   saturation back down and reduces the overscan so the image reads sharp
-   and distant instead of like a cropped macro shot. */
+   saturation back down so the image reads sharp and distant instead of
+   like a cropped macro shot. */
 .parallax-layer--natural{
-  filter:saturate(1.04) contrast(1.0) brightness(0.98) blur(0px);
+  filter:saturate(1.06) contrast(1.0) brightness(1.08) blur(0px);
 }
 .parallax-layer--tight{
-  inset:-16% -6%;
-  background-position:center 30%;
+  inset:-8% -4%;
+  background-position:center 32%;
 }
 
 /* ============================================================
@@ -264,13 +266,7 @@ p{ margin:0; }
   text-transform:uppercase;
   color:var(--cyan-soft);
   margin-bottom:14px;
-  background:rgba(3,6,10,.75);
-  backdrop-filter:blur(4px);
-  -webkit-backdrop-filter:blur(4px);
-  padding:7px 14px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.1);
-  text-shadow:0 1px 6px rgba(0,0,0,.6);
+  text-shadow:0 1px 6px rgba(0,0,0,.85), 0 0 18px rgba(0,0,0,.5);
 }
 .eyebrow-dot{
   width:6px; height:6px; border-radius:50%;
@@ -283,14 +279,7 @@ p{ margin:0; }
   font-weight:600;
   max-width:18ch;
   margin-bottom:18px;
-  background:rgba(3,6,10,.7);
-  backdrop-filter:blur(4px);
-  -webkit-backdrop-filter:blur(4px);
-  padding:0.15em 0.35em;
-  border-radius:10px;
-  box-decoration-break:clone;
-  -webkit-box-decoration-break:clone;
-  text-shadow:var(--shadow-txt);
+  text-shadow:0 2px 6px rgba(0,0,0,.85), 0 10px 30px rgba(0,0,0,.7);
 }
 .section-lead{
   font-size:1.02rem;
@@ -298,14 +287,7 @@ p{ margin:0; }
   max-width:56ch;
   line-height:1.65;
   margin-bottom:44px;
-  background:rgba(3,6,10,.72);
-  backdrop-filter:blur(4px);
-  -webkit-backdrop-filter:blur(4px);
-  padding:0.2em 0.4em;
-  border-radius:8px;
-  box-decoration-break:clone;
-  -webkit-box-decoration-break:clone;
-  text-shadow:var(--shadow-txt);
+  text-shadow:0 2px 6px rgba(0,0,0,.85), 0 8px 24px rgba(0,0,0,.65);
 }
 .text-accent{ color:var(--cyan-soft); }
 .text-accent-soft{ color:var(--gold-soft); }
@@ -329,84 +311,23 @@ p{ margin:0; }
 @media (max-width:900px){ .drift{ display:none; } }
 
 /* ============================================================
-   Complement layer — decorative holographic artwork (shields,
-   keys, seals) that lives in the "black zone" gutters outside
-   the 1180px content container, one copy per side, so it never
-   overlaps text, cards or the readable column. Only shows once
-   the viewport is wide enough to actually have that empty
-   margin to spare; scales up gracefully on very wide screens.
-   Two-part structure so two independent animations can run
-   without fighting each other:
-     .complement        — outer wrapper, JS writes the scroll-
-                           driven parallax transform here
-                           (translate + 3D rotation + scale)
-     .complement-inner   — the actual artwork; a slow idle
-                           CSS keyframe gives it a continuous
-                           holographic "float" even at rest
+   Matrix rain — ambient cyber-code animation behind every
+   section, fixed to the viewport so it reads as one continuous
+   backdrop instead of a per-section effect.
    ============================================================ */
-.complement{
-  position:absolute;
-  z-index:1;
-  pointer-events:none;
-  will-change:transform;
-  transform-style:preserve-3d;
-  display:none;
-  width:120px;
-}
-.complement-inner{
+.matrix-rain{
+  position:fixed;
+  inset:0;
+  z-index:0;
   width:100%;
   height:100%;
-  background-size:contain;
-  background-repeat:no-repeat;
-  background-position:center;
-  opacity:.95;
-  filter:drop-shadow(0 22px 46px rgba(0,0,0,.6)) drop-shadow(0 0 34px rgba(95,212,255,.2));
-  transform-style:preserve-3d;
-  animation:complementFloat 8s ease-in-out infinite;
+  pointer-events:none;
+  opacity:.5;
+  mix-blend-mode:screen;
 }
-.complement--mirror .complement-inner{ animation-name:complementFloatMirror; }
+@media (max-width:720px){ .matrix-rain{ opacity:.32; } }
+@media (prefers-reduced-motion: reduce){ .matrix-rain{ display:none; } }
 
-.complement--left{ left:16px; }
-.complement--right{ right:16px; }
-
-/* Only render once there's genuine empty margin beyond the 1180px
-   container (container + its own 28px side padding ≈ 1236px), and
-   scale up as the gutter grows so it always reads as intentional,
-   never cramped. */
-@media (min-width:1360px){
-  .complement{ display:block; width:112px; }
-  .complement--left{ left:22px; }
-  .complement--right{ right:22px; }
-}
-@media (min-width:1600px){
-  .complement{ width:150px; }
-  .complement--left{ left:34px; }
-  .complement--right{ right:34px; }
-}
-@media (min-width:1900px){
-  .complement{ width:190px; }
-  .complement--left{ left:54px; }
-  .complement--right{ right:54px; }
-}
-
-@keyframes complementFloat{
-  0%{   transform:translateY(0)     rotateY(-7deg) rotateX(4deg)  translateZ(0); }
-  50%{  transform:translateY(-18px) rotateY(7deg)  rotateX(-4deg) translateZ(26px); }
-  100%{ transform:translateY(0)     rotateY(-7deg) rotateX(4deg)  translateZ(0); }
-}
-@keyframes complementFloatMirror{
-  0%{   transform:scaleX(-1) translateY(0)     rotateY(7deg)  rotateX(4deg)  translateZ(0); }
-  50%{  transform:scaleX(-1) translateY(-18px) rotateY(-7deg) rotateX(-4deg) translateZ(26px); }
-  100%{ transform:scaleX(-1) translateY(0)     rotateY(7deg)  rotateX(4deg)  translateZ(0); }
-}
-@media (prefers-reduced-motion: reduce){
-  .complement{ display:none !important; }
-  .complement-inner{ animation:none; }
-}
-
-/* Sections that host a .complement need a perspective origin so
-   the scroll-driven rotateX/rotateY (applied by JS) reads as real
-   3D depth instead of a flat skew. */
 .hero, .section-dark, .section-cta{ perspective:1400px; }
 
 /* ============================================================
@@ -416,13 +337,15 @@ p{ margin:0; }
   position:relative;
   padding:110px 0;
   overflow:hidden;
-  background:var(--bg-void);
+  background:transparent;
 }
-.section-dark{ background:var(--bg-panel); }
+.section-dark{ background:transparent; }
 .section-dark::before{
   content:'';
   position:absolute; inset:0;
-  background:radial-gradient(120% 90% at 50% 0%, rgba(95,212,255,.06), transparent 60%);
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgba(95,212,255,.07), transparent 60%),
+    radial-gradient(60% 60% at 50% 45%, rgba(5,8,13,.1), rgba(5,8,13,.62) 78%);
   z-index:0;
 }
 
@@ -459,8 +382,8 @@ p{ margin:0; }
 .hero-veil{
   position:absolute; inset:0; z-index:1;
   background:
-    radial-gradient(60% 55% at 50% 32%, rgba(5,8,13,.14), rgba(5,8,13,.72) 72%),
-    linear-gradient(180deg, rgba(5,8,13,.32) 0%, rgba(5,8,13,.4) 42%, var(--bg-void) 100%);
+    radial-gradient(60% 55% at 50% 32%, rgba(5,8,13,.32), rgba(5,8,13,.82) 72%),
+    linear-gradient(180deg, rgba(5,8,13,.46) 0%, rgba(5,8,13,.5) 42%, var(--bg-void) 100%);
 }
 .hero-content{ text-align:center; margin:0 auto; }
 .hero-content .eyebrow{ justify-content:center; }
@@ -471,14 +394,7 @@ p{ margin:0; }
   margin:0 auto 22px;
   max-width:23ch;
   color:var(--text-hi);
-  background:rgba(3,6,10,.6);
-  backdrop-filter:blur(5px);
-  -webkit-backdrop-filter:blur(5px);
-  padding:0.08em 0.3em;
-  border-radius:14px;
-  box-decoration-break:clone;
-  -webkit-box-decoration-break:clone;
-  text-shadow:var(--shadow-txt);
+  text-shadow:0 2px 8px rgba(0,0,0,.9), 0 14px 40px rgba(0,0,0,.75);
 }
 .hero-sub{
   font-size:1.08rem;
@@ -486,14 +402,7 @@ p{ margin:0; }
   max-width:52ch;
   margin:0 auto 36px;
   line-height:1.7;
-  background:rgba(3,6,10,.68);
-  backdrop-filter:blur(4px);
-  -webkit-backdrop-filter:blur(4px);
-  padding:0.2em 0.4em;
-  border-radius:8px;
-  box-decoration-break:clone;
-  -webkit-box-decoration-break:clone;
-  text-shadow:var(--shadow-txt);
+  text-shadow:0 2px 6px rgba(0,0,0,.85), 0 8px 24px rgba(0,0,0,.65);
 }
 .hero-actions{
   display:flex; gap:16px; justify-content:center; flex-wrap:wrap;
@@ -507,11 +416,7 @@ p{ margin:0; }
   max-width:100%;
   width:fit-content;
   margin:0 auto;
-  background:rgba(3,6,10,.65);
-  backdrop-filter:blur(4px);
-  -webkit-backdrop-filter:blur(4px);
-  padding:0.35em 0.7em;
-  border-radius:999px;
+  text-shadow:0 1px 6px rgba(0,0,0,.85);
 }
 
 .hero-hud{
@@ -584,14 +489,7 @@ p{ margin:0; }
   max-width:44ch;
   margin:0 auto;
   line-height:1.5;
-  background:rgba(3,6,10,.62);
-  backdrop-filter:blur(4px);
-  -webkit-backdrop-filter:blur(4px);
-  padding:0.3em 0.5em;
-  border-radius:10px;
-  box-decoration-break:clone;
-  -webkit-box-decoration-break:clone;
-  text-shadow:var(--shadow-txt);
+  text-shadow:0 2px 6px rgba(0,0,0,.85), 0 8px 24px rgba(0,0,0,.65);
 }
 
 /* ============================================================

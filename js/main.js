@@ -85,22 +85,7 @@
       var rect = el.getBoundingClientRect();
       var centerDelta = rect.top + rect.height / 2 - vh / 2;
       var offset = centerDelta * speed;
-
-      if (el.classList.contains("complement")) {
-        /* Complements get real 3D depth on top of the drift: as they
-           travel from the edge of the viewport toward its center they
-           rotate in from an angle and settle, then rotate back out the
-           other side — like a holographic panel reacting to the scroll. */
-        var norm = Math.max(-1, Math.min(1, centerDelta / (vh / 2)));
-        var rotateY = (norm * -16).toFixed(1);
-        var rotateX = (norm * 9).toFixed(1);
-        var scale = (1 + (1 - Math.abs(norm)) * 0.08).toFixed(3);
-        el.style.transform =
-          "translate3d(0," + offset.toFixed(1) + "px,0) " +
-          "rotateY(" + rotateY + "deg) rotateX(" + rotateX + "deg) scale(" + scale + ")";
-      } else {
-        el.style.transform = "translate3d(0," + offset.toFixed(1) + "px,0)";
-      }
+      el.style.transform = "translate3d(0," + offset.toFixed(1) + "px,0)";
     });
 
     ticking = false;
@@ -175,5 +160,82 @@
   --------------------------------------------------------- */
   var yearEl = document.getElementById("year");
   if (yearEl) { yearEl.textContent = new Date().getFullYear(); }
+
+  /* ---------------------------------------------------------
+     Matrix-style code rain — fixed, full-page ambient backdrop.
+     Cyan/teal glyphs (letters, digits, hex) drift downward with
+     fading trails, giving every "black zone" of the site a
+     living cybersecurity texture instead of flat black.
+  --------------------------------------------------------- */
+  var matrixCanvas = document.getElementById("matrixCanvas");
+  if (matrixCanvas && !reduceMotion) {
+    var mctx = matrixCanvas.getContext("2d");
+    var glyphs = "01ABCDEF{}<>/\\#$%&QUANTIUM01アイウエオカキクケコ01".split("");
+    var fontSize = 15;
+    var columns = 0;
+    var drops = [];
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    function sizeMatrixCanvas() {
+      var w = window.innerWidth;
+      var h = window.innerHeight;
+      matrixCanvas.width = w * dpr;
+      matrixCanvas.height = h * dpr;
+      matrixCanvas.style.width = w + "px";
+      matrixCanvas.style.height = h + "px";
+      mctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      columns = Math.ceil(w / fontSize);
+      var prevDrops = drops;
+      drops = [];
+      for (var i = 0; i < columns; i++) {
+        drops[i] = prevDrops[i] !== undefined ? prevDrops[i] : Math.floor(Math.random() * -40);
+      }
+    }
+    sizeMatrixCanvas();
+
+    var matrixResizeTimer = null;
+    window.addEventListener("resize", function () {
+      clearTimeout(matrixResizeTimer);
+      matrixResizeTimer = setTimeout(sizeMatrixCanvas, 200);
+    });
+
+    function drawMatrix() {
+      var w = window.innerWidth;
+      var h = window.innerHeight;
+
+      mctx.fillStyle = "rgba(4,8,13,0.16)";
+      mctx.fillRect(0, 0, w, h);
+
+      mctx.font = fontSize + "px 'JetBrains Mono', monospace";
+      for (var i = 0; i < columns; i++) {
+        var text = glyphs[Math.floor(Math.random() * glyphs.length)];
+        var x = i * fontSize;
+        var y = drops[i] * fontSize;
+
+        if (y >= 0) {
+          mctx.fillStyle = "rgba(190,255,250,0.85)";
+          mctx.fillText(text, x, y);
+          mctx.fillStyle = "rgba(95,212,255,0.45)";
+          mctx.fillText(text, x, y - fontSize);
+        }
+
+        if (y > h && Math.random() > 0.975) {
+          drops[i] = Math.floor(Math.random() * -20);
+        }
+        drops[i]++;
+      }
+    }
+
+    var matrixInterval = setInterval(drawMatrix, isDesktop ? 60 : 140);
+
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) {
+        clearInterval(matrixInterval);
+      } else {
+        matrixInterval = setInterval(drawMatrix, 60);
+      }
+    });
+  }
 
 })();
