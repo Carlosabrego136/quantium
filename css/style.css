@@ -268,7 +268,11 @@ p{ margin:0; }
   margin-bottom:14px;
   padding:7px 14px;
   border-radius:999px;
-  background:linear-gradient(135deg, rgba(8,13,20,.62), rgba(8,13,20,.42));
+  background:
+    linear-gradient(120deg, rgba(95,212,255,.16), rgba(178,140,255,.1) 32%, rgba(232,185,94,.14) 66%, rgba(95,212,255,.16)),
+    linear-gradient(135deg, rgba(8,13,20,.6), rgba(8,13,20,.4));
+  background-size:240% 240%, 100% 100%;
+  animation:holoShift 11s ease-in-out infinite;
   backdrop-filter:blur(7px);
   -webkit-backdrop-filter:blur(7px);
   border:1px solid rgba(95,212,255,.16);
@@ -285,7 +289,11 @@ p{ margin:0; }
   font-weight:600;
   max-width:18ch;
   margin-bottom:18px;
-  background:linear-gradient(120deg, rgba(6,10,16,.58), rgba(6,10,16,.4));
+  background:
+    linear-gradient(120deg, rgba(95,212,255,.14), rgba(178,140,255,.09) 32%, rgba(232,185,94,.12) 66%, rgba(95,212,255,.14)),
+    linear-gradient(120deg, rgba(6,10,16,.56), rgba(6,10,16,.38));
+  background-size:240% 240%, 100% 100%;
+  animation:holoShift 13s ease-in-out infinite;
   backdrop-filter:blur(7px);
   -webkit-backdrop-filter:blur(7px);
   padding:.12em .32em;
@@ -300,7 +308,11 @@ p{ margin:0; }
   max-width:56ch;
   line-height:1.8;
   margin-bottom:44px;
-  background:linear-gradient(120deg, rgba(6,10,16,.52), rgba(6,10,16,.34));
+  background:
+    linear-gradient(120deg, rgba(95,212,255,.1), rgba(178,140,255,.07) 32%, rgba(232,185,94,.09) 66%, rgba(95,212,255,.1)),
+    linear-gradient(120deg, rgba(6,10,16,.5), rgba(6,10,16,.32));
+  background-size:240% 240%, 100% 100%;
+  animation:holoShift 15s ease-in-out infinite;
   backdrop-filter:blur(6px);
   -webkit-backdrop-filter:blur(6px);
   padding:.1em .3em;
@@ -311,6 +323,21 @@ p{ margin:0; }
 }
 .text-accent{ color:var(--cyan-soft); }
 .text-accent-soft{ color:var(--gold-soft); }
+
+/* Subtle iridescent shimmer used behind readable text — a slow drift
+   across a cyan → violet → gold gradient, like light on a hologram.
+   Never fast or flashy; it should read as ambient polish. */
+@keyframes holoShift{
+  0%{   background-position:0% 50%, 0% 0%; }
+  50%{  background-position:100% 50%, 0% 0%; }
+  100%{ background-position:0% 50%, 0% 0%; }
+}
+@media (prefers-reduced-motion: reduce){
+  .eyebrow, .section-title, .section-lead,
+  .hero-title, .hero-sub, .hero-note, .problem-close{
+    animation:none;
+  }
+}
 
 /* Elements that drift at their own speed as the page scrolls */
 [data-parallax]{
@@ -435,7 +462,11 @@ p{ margin:0; }
   max-width:23ch;
   line-height:1.28;
   color:var(--text-hi);
-  background:linear-gradient(120deg, rgba(6,10,16,.56), rgba(6,10,16,.36));
+  background:
+    linear-gradient(120deg, rgba(95,212,255,.15), rgba(178,140,255,.1) 32%, rgba(232,185,94,.13) 66%, rgba(95,212,255,.15)),
+    linear-gradient(120deg, rgba(6,10,16,.54), rgba(6,10,16,.34));
+  background-size:240% 240%, 100% 100%;
+  animation:holoShift 14s ease-in-out infinite;
   backdrop-filter:blur(8px);
   -webkit-backdrop-filter:blur(8px);
   padding:.08em .3em;
@@ -450,7 +481,11 @@ p{ margin:0; }
   max-width:52ch;
   margin:0 auto 36px;
   line-height:1.9;
-  background:linear-gradient(120deg, rgba(6,10,16,.5), rgba(6,10,16,.32));
+  background:
+    linear-gradient(120deg, rgba(95,212,255,.1), rgba(178,140,255,.07) 32%, rgba(232,185,94,.09) 66%, rgba(95,212,255,.1)),
+    linear-gradient(120deg, rgba(6,10,16,.48), rgba(6,10,16,.3));
+  background-size:240% 240%, 100% 100%;
+  animation:holoShift 16s ease-in-out infinite;
   backdrop-filter:blur(6px);
   -webkit-backdrop-filter:blur(6px);
   padding:.1em .3em;
@@ -473,7 +508,11 @@ p{ margin:0; }
   margin:0 auto;
   padding:.4em .8em;
   border-radius:999px;
-  background:linear-gradient(135deg, rgba(8,13,20,.55), rgba(8,13,20,.36));
+  background:
+    linear-gradient(120deg, rgba(95,212,255,.13), rgba(178,140,255,.08) 32%, rgba(232,185,94,.11) 66%, rgba(95,212,255,.13)),
+    linear-gradient(135deg, rgba(8,13,20,.52), rgba(8,13,20,.34));
+  background-size:240% 240%, 100% 100%;
+  animation:holoShift 12s ease-in-out infinite;
   backdrop-filter:blur(6px);
   -webkit-backdrop-filter:blur(6px);
   border:1px solid rgba(255,255,255,.06);
@@ -549,7 +588,11 @@ p{ margin:0; }
   max-width:44ch;
   margin:0 auto;
   line-height:1.7;
-  background:linear-gradient(120deg, rgba(6,10,16,.5), rgba(6,10,16,.32));
+  background:
+    linear-gradient(120deg, rgba(95,212,255,.11), rgba(178,140,255,.07) 32%, rgba(232,185,94,.1) 66%, rgba(95,212,255,.11)),
+    linear-gradient(120deg, rgba(6,10,16,.48), rgba(6,10,16,.3));
+  background-size:240% 240%, 100% 100%;
+  animation:holoShift 15s ease-in-out infinite;
   backdrop-filter:blur(6px);
   -webkit-backdrop-filter:blur(6px);
   padding:.15em .35em;
@@ -849,9 +892,33 @@ p{ margin:0; }
     transform:none !important;
     inset:0;
     background-position:center 15%;
+    -webkit-mask-image:linear-gradient(to bottom, transparent 0%, black 26%, black 74%, transparent 100%);
+    mask-image:linear-gradient(to bottom, transparent 0%, black 26%, black 74%, transparent 100%);
   }
   .section{ padding:76px 0; }
   .section-cta{ padding:90px 0; }
+
+  /* The radial veils read fine mid-section but stay too bright right at
+     the very top/bottom edge on short mobile viewports — exactly where
+     one section meets the next — which is what reads as a visible seam.
+     Add a full-width linear fade at those edges so every section, photo
+     or not, always resolves to the same near-black tone at its border. */
+  .section-dark::before{
+    background:
+      radial-gradient(160% 120% at 50% 0%, rgba(95,212,255,.05), transparent 55%),
+      radial-gradient(120% 90% at 50% 45%, rgba(5,8,13,.16), rgba(5,8,13,.42) 75%),
+      linear-gradient(180deg, rgba(5,8,13,.72) 0%, transparent 20%, transparent 80%, rgba(5,8,13,.72) 100%);
+  }
+  .section-cta::before{
+    background:
+      radial-gradient(110% 100% at 50% 32%, rgba(5,8,13,.16), rgba(5,8,13,.44) 74%),
+      linear-gradient(180deg, var(--bg-void) 0%, transparent 22%, transparent 78%, var(--bg-void) 100%);
+  }
+  .hero-veil{
+    background:
+      radial-gradient(90% 70% at 50% 32%, rgba(5,8,13,.2), rgba(5,8,13,.48) 70%),
+      linear-gradient(180deg, rgba(5,8,13,.5) 0%, transparent 16%, transparent 78%, var(--bg-void) 100%);
+  }
 }
 
 @media (prefers-reduced-motion: reduce){
