@@ -352,7 +352,8 @@ p{ margin:0; }
 }
 @media (prefers-reduced-motion: reduce){
   .eyebrow, .section-title, .section-lead,
-  .hero-title, .hero-sub, .hero-note, .problem-close{
+  .hero-title, .hero-sub, .hero-note, .problem-close,
+  .trust-strip li, .footer-legal{
     animation:none;
   }
 }
@@ -523,22 +524,23 @@ p{ margin:0; }
 .hero-note{
   font-family:var(--font-mono);
   font-size:.78rem;
-  color:var(--steel);
+  color:var(--text-hi);
   letter-spacing:.02em;
   max-width:100%;
   width:fit-content;
   margin:0 auto;
-  padding:.4em .8em;
+  padding:.45em .9em;
   border-radius:999px;
   background:
-    linear-gradient(120deg, rgba(240,178,63,.2), rgba(255,255,255,.08) 45%, rgba(170,178,189,.11) 75%, rgba(240,178,63,.2)),
-    linear-gradient(135deg, rgba(8,9,11,.48), rgba(8,9,11,.3));
+    linear-gradient(120deg, rgba(240,178,63,.26), rgba(255,255,255,.11) 45%, rgba(170,178,189,.14) 75%, rgba(240,178,63,.26)),
+    linear-gradient(135deg, rgba(6,7,9,.68), rgba(6,7,9,.5));
   background-size:240% 240%, 100% 100%;
   animation:holoShift 13s ease-in-out infinite;
-  backdrop-filter:blur(6px);
-  -webkit-backdrop-filter:blur(6px);
-  border:1px solid rgba(255,255,255,.07);
-  box-shadow:inset 0 1px 0 rgba(255,212,121,.3), 0 0 18px rgba(240,178,63,.08);
+  backdrop-filter:blur(7px);
+  -webkit-backdrop-filter:blur(7px);
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow:inset 0 1px 0 rgba(255,212,121,.4), 0 0 22px rgba(240,178,63,.12);
+  text-shadow:0 1px 4px rgba(0,0,0,.7);
 }
 
 /* Small trust signals under the hero note — quiet, factual, not another
@@ -555,8 +557,19 @@ p{ margin:0; }
   font-family:var(--font-mono);
   font-size:.72rem;
   letter-spacing:.01em;
-  color:var(--steel);
-  text-shadow:0 1px 4px rgba(0,0,0,.6);
+  color:var(--text-hi);
+  padding:.5em .9em;
+  border-radius:999px;
+  background:
+    linear-gradient(120deg, rgba(240,178,63,.18), rgba(255,255,255,.07) 45%, rgba(170,178,189,.1) 75%, rgba(240,178,63,.18)),
+    linear-gradient(135deg, rgba(6,7,9,.62), rgba(6,7,9,.44));
+  background-size:240% 240%, 100% 100%;
+  animation:holoShift 14s ease-in-out infinite;
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:inset 0 1px 0 rgba(255,212,121,.3), 0 0 16px rgba(240,178,63,.1);
+  text-shadow:0 1px 4px rgba(0,0,0,.7);
 }
 .trust-strip svg{
   width:15px; height:15px; flex:none;
@@ -1106,12 +1119,22 @@ p{ margin:0; }
 .footer-legal{
   flex-basis:100%;
   order:5;
-  font-size:.72rem;
-  color:var(--text-dim);
-  opacity:.7;
-  line-height:1.7;
+  font-size:.74rem;
+  color:var(--text-hi);
+  line-height:1.75;
   max-width:640px;
-  margin-top:2px;
+  margin-top:6px;
+  padding:.7em 1em;
+  border-radius:10px;
+  background:
+    linear-gradient(120deg, rgba(240,178,63,.14), rgba(255,255,255,.05) 45%, rgba(170,178,189,.08) 75%, rgba(240,178,63,.14)),
+    linear-gradient(120deg, rgba(6,7,9,.5), rgba(6,7,9,.34));
+  background-size:240% 240%, 100% 100%;
+  animation:holoShift 15s ease-in-out infinite;
+  backdrop-filter:blur(5px);
+  -webkit-backdrop-filter:blur(5px);
+  box-shadow:inset 0 1px 0 rgba(255,212,121,.22);
+  text-shadow:0 1px 4px rgba(0,0,0,.5);
 }
 .footer-links{ display:flex; gap:20px; }
 .footer-links a{ font-size:.8rem; color:var(--text-dim); }
