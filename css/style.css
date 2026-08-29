@@ -245,15 +245,16 @@ p{ margin:0; }
 .parallax-layer{
   position:absolute;
   inset:0;
-  background-size:cover;
+  background-size:contain;
   background-position:center;
   background-repeat:no-repeat;
+  background-color:var(--bg-void);
   will-change:transform;
   z-index:0;
   transform:translate3d(0,0,0) scale(1);
   filter:saturate(1.12) contrast(1.02) brightness(1.16);
-  -webkit-mask-image:linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
-  mask-image:linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
+  -webkit-mask-image:linear-gradient(to bottom, transparent 0%, black 42%, black 58%, transparent 100%);
+  mask-image:linear-gradient(to bottom, transparent 0%, black 42%, black 58%, transparent 100%);
 }
 .parallax-layer--dim{ opacity:.78; }
 .parallax-layer--fore{
@@ -1316,8 +1317,8 @@ p{ margin:0; }
     transform:none !important;
     inset:0;
     background-position:center;
-    -webkit-mask-image:linear-gradient(to bottom, transparent 0%, black 32%, black 68%, transparent 100%);
-    mask-image:linear-gradient(to bottom, transparent 0%, black 32%, black 68%, transparent 100%);
+    -webkit-mask-image:linear-gradient(to bottom, transparent 0%, black 42%, black 58%, transparent 100%);
+    mask-image:linear-gradient(to bottom, transparent 0%, black 42%, black 58%, transparent 100%);
   }
   .section{ padding:76px 0; }
   .section-cta{ padding:90px 0; }
