@@ -137,10 +137,18 @@ p{ margin:0; }
   height:52px;
   width:auto;
   display:block;
-  filter:drop-shadow(0 0 14px rgba(240,178,63,.28));
+  filter:drop-shadow(0 0 16px rgba(240,178,63,.55)) drop-shadow(0 0 34px rgba(240,178,63,.25));
+  animation:logoGlow 4.5s ease-in-out infinite;
   transition:filter .25s;
 }
-.brand:hover .brand-logo{ filter:drop-shadow(0 0 20px rgba(240,178,63,.42)); }
+.brand:hover .brand-logo{
+  filter:drop-shadow(0 0 22px rgba(240,178,63,.75)) drop-shadow(0 0 46px rgba(240,178,63,.4));
+}
+@keyframes logoGlow{
+  0%, 100%{ filter:drop-shadow(0 0 16px rgba(240,178,63,.55)) drop-shadow(0 0 34px rgba(240,178,63,.25)); }
+  50%{ filter:drop-shadow(0 0 20px rgba(240,178,63,.7)) drop-shadow(0 0 42px rgba(240,178,63,.35)); }
+}
+@media (prefers-reduced-motion: reduce){ .brand-logo{ animation:none; } }
 
 .brand-footer .brand-logo{ height:44px; }
 
@@ -921,6 +929,34 @@ p{ margin:0; }
 .feature-icon svg{ width:19px; height:19px; }
 .feature h3{ font-size:1rem; margin-bottom:8px; }
 .feature p{ font-size:.88rem; line-height:1.6; }
+
+/* Arsenal cards use a full illustration instead of the small icon —
+   same edge-to-edge media treatment as the risk/step cards, so the
+   whole grid reads as one coherent visual language. */
+.feature--media{
+  padding:0 24px 28px;
+  overflow:hidden;
+}
+.feature-media{
+  display:block;
+  position:relative;
+  margin:0 -24px 20px;
+  aspect-ratio:16/9;
+  overflow:hidden;
+  border-bottom:1px solid rgba(240,178,63,.16);
+}
+.feature-media::after{
+  content:'';
+  position:absolute; inset:0;
+  background:linear-gradient(180deg, transparent 55%, rgba(15,18,23,.85) 100%);
+}
+.feature-media img{
+  width:100%; height:100%;
+  object-fit:cover;
+  display:block;
+  transition:transform .6s var(--ease);
+}
+.feature--media:hover .feature-media img{ transform:scale(1.045); }
 
 /* ============================================================
    Compare table
