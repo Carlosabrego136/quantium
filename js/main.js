@@ -60,10 +60,11 @@
   }
 
   /* ---------------------------------------------------------
-     Pronounced parallax — layered backgrounds AND individual
-     elements (headings, text, cards, floating accents) each
-     drift at their own speed as the page scrolls. Desktop
-     only; mobile keeps everything static per brief.
+     Parallax — text, headings, cards and floating accents still
+     drift a little at their own speed as the page scrolls.
+     Background photos no longer move (kept static on every
+     device, per request). Desktop only; mobile keeps everything
+     static per brief.
 
      Positions are measured once (on load/resize) and cached as
      a document-relative offset, instead of calling
@@ -73,40 +74,27 @@
      matrix-rain interval) of time to run. With cached positions,
      each scroll frame only does cheap arithmetic.
   --------------------------------------------------------- */
-  var bgLayers = Array.prototype.slice.call(document.querySelectorAll(".parallax-layer"));
   var elLayers = Array.prototype.slice.call(document.querySelectorAll("[data-parallax]"));
   var ticking = false;
-  var bgMeasure = [];
   var elMeasure = [];
 
-  // Text/cards move a little less than before, per request — backgrounds unchanged.
+  // Text/cards move a little less than before, per request.
   var ELEMENT_DAMPING = 0.55;
 
-  function measure(list, useParent) {
+  function measure(list) {
     return list.map(function (el) {
-      var target = useParent ? el.parentElement : el;
-      var rect = target.getBoundingClientRect();
+      var rect = el.getBoundingClientRect();
       return { docTop: rect.top + window.scrollY, height: rect.height };
     });
   }
 
   function remeasureParallax() {
-    bgMeasure = measure(bgLayers, true);
-    elMeasure = measure(elLayers, false);
+    elMeasure = measure(elLayers);
   }
 
   function updateParallax() {
     var vh = window.innerHeight;
     var scrollY = window.scrollY;
-
-    bgLayers.forEach(function (layer, i) {
-      var speed = parseFloat(layer.getAttribute("data-speed")) || 0.15;
-      var scale = parseFloat(layer.getAttribute("data-scale")) || 1.08;
-      var m = bgMeasure[i];
-      var top = m.docTop - scrollY;
-      var offset = (top + m.height / 2 - vh / 2) * speed;
-      layer.style.transform = "translate3d(0," + offset.toFixed(1) + "px,0) scale(" + scale + ")";
-    });
 
     elLayers.forEach(function (el, i) {
       var speed = (parseFloat(el.getAttribute("data-speed")) || 0.04) * ELEMENT_DAMPING;
@@ -126,7 +114,7 @@
     }
   }
 
-  if (isDesktop && !reduceMotion && (bgLayers.length || elLayers.length)) {
+  if (isDesktop && !reduceMotion && elLayers.length) {
     remeasureParallax();
     updateParallax();
     window.addEventListener("scroll", requestParallax, { passive: true });
