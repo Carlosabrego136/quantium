@@ -60,11 +60,14 @@
   }
 
   /* ---------------------------------------------------------
-     Parallax — text, headings, cards and floating accents still
-     drift a little at their own speed as the page scrolls.
-     Background photos no longer move (kept static on every
-     device, per request). Desktop only; mobile keeps everything
-     static per brief.
+     Parallax — text and headings drift at their own speed as
+     the page scrolls, eased every frame so the motion trails
+     smoothly behind the scroll instead of snapping straight to
+     it. Cards, feature grids, steps and the FAQ list no longer
+     carry data-parallax at all, so they stay fully still — only
+     letters/text (plus the small floating accent dots) move.
+     Background photos stay static too. Desktop only; mobile
+     keeps everything static per brief.
 
      Positions are measured once (on load/resize) and cached as
      a document-relative offset, instead of calling
@@ -77,9 +80,12 @@
   var elLayers = Array.prototype.slice.call(document.querySelectorAll("[data-parallax]"));
   var ticking = false;
   var elMeasure = [];
+  var elCurrent = elLayers.map(function () { return 0; });
 
-  // Text/cards move a little less than before, per request.
   var ELEMENT_DAMPING = 0.55;
+  // How quickly each element eases toward its target offset each
+  // frame — lower = more trailing "fluid" lag, higher = snappier.
+  var PARALLAX_EASE = 0.1;
 
   function measure(list) {
     return list.map(function (el) {
@@ -95,28 +101,39 @@
   function updateParallax() {
     var vh = window.innerHeight;
     var scrollY = window.scrollY;
+    var settled = true;
 
     elLayers.forEach(function (el, i) {
       var speed = (parseFloat(el.getAttribute("data-speed")) || 0.04) * ELEMENT_DAMPING;
       var m = elMeasure[i];
       var top = m.docTop - scrollY;
-      var offset = (top + m.height / 2 - vh / 2) * speed;
-      el.style.transform = "translate3d(0," + offset.toFixed(1) + "px,0)";
+      var target = (top + m.height / 2 - vh / 2) * speed;
+      var current = elCurrent[i];
+      var next = current + (target - current) * PARALLAX_EASE;
+
+      if (Math.abs(target - next) > 0.05) settled = false;
+
+      elCurrent[i] = next;
+      el.style.transform = "translate3d(0," + next.toFixed(1) + "px,0)";
     });
 
-    ticking = false;
+    if (settled) {
+      ticking = false;
+    } else {
+      window.requestAnimationFrame(updateParallax);
+    }
   }
 
   function requestParallax() {
     if (!ticking) {
-      window.requestAnimationFrame(updateParallax);
       ticking = true;
+      window.requestAnimationFrame(updateParallax);
     }
   }
 
   if (isDesktop && !reduceMotion && elLayers.length) {
     remeasureParallax();
-    updateParallax();
+    requestParallax();
     window.addEventListener("scroll", requestParallax, { passive: true });
     window.addEventListener("resize", function () {
       remeasureParallax();
@@ -150,18 +167,6 @@
     });
   } else {
     revealTargets.forEach(function (el) { el.classList.add("is-visible"); });
-  }
-
-  /* ---------------------------------------------------------
-     Live monitoring counter (decorative HUD readout)
-  --------------------------------------------------------- */
-  var counterEl = document.getElementById("liveCounter");
-  if (counterEl && !reduceMotion) {
-    var base = 4812106;
-    setInterval(function () {
-      base += Math.floor(Math.random() * 4) + 1;
-      counterEl.textContent = base.toLocaleString("es-MX").replace(/,/g, " ");
-    }, 2200);
   }
 
   /* ---------------------------------------------------------
