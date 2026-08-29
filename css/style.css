@@ -280,6 +280,29 @@ p{ margin:0; }
 }
 
 /* ============================================================
+   Section seams — sits exactly on the border between two
+   sections and heavily blurs that thin band, so whatever hard
+   edge two independent backgrounds/masks create at the seam
+   dissolves into a soft, uniform transition instead of a line.
+   ============================================================ */
+.section-seam{
+  position:relative;
+  height:1px;
+  margin:-110px 0;
+  pointer-events:none;
+  z-index:1;
+  overflow:visible;
+  backdrop-filter:blur(48px);
+  -webkit-backdrop-filter:blur(48px);
+  background:rgba(5,8,13,.16);
+  -webkit-mask-image:linear-gradient(to bottom, transparent 0%, black 35%, black 65%, transparent 100%);
+  mask-image:linear-gradient(to bottom, transparent 0%, black 35%, black 65%, transparent 100%);
+}
+@media (max-width:720px){
+  .section-seam{ margin:-70px 0; backdrop-filter:blur(30px); -webkit-backdrop-filter:blur(30px); }
+}
+
+/* ============================================================
    Eyebrow / typography helpers
    ============================================================ */
 .eyebrow{
