@@ -1147,7 +1147,7 @@ p{ margin:0; }
 }
 .footer-links{ display:flex; gap:20px; }
 .footer-links a{ font-size:.8rem; color:var(--text-dim); }
-.footer-links a:hover{ color:var(--cyan-soft); }
+.footer-links a:hover{ color:var(--gold-soft); }
 
 @media (max-width:640px){
   .footer-inner{ flex-direction:column; text-align:center; }
