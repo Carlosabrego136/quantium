@@ -85,7 +85,7 @@
   var ELEMENT_DAMPING = 0.55;
   // How quickly each element eases toward its target offset each
   // frame — lower = more trailing "fluid" lag, higher = snappier.
-  var PARALLAX_EASE = 0.1;
+  var PARALLAX_EASE = 0.45;
 
   function measure(list) {
     return list.map(function (el) {
