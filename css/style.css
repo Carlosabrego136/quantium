@@ -134,7 +134,7 @@ p{ margin:0; }
   margin-right:auto;
 }
 .brand-logo{
-  height:38px;
+  height:52px;
   width:auto;
   display:block;
   filter:drop-shadow(0 0 14px rgba(240,178,63,.28));
@@ -142,7 +142,7 @@ p{ margin:0; }
 }
 .brand:hover .brand-logo{ filter:drop-shadow(0 0 20px rgba(240,178,63,.42)); }
 
-.brand-footer .brand-logo{ height:32px; }
+.brand-footer .brand-logo{ height:44px; }
 
 .nav-links{ display:flex; gap:28px; }
 .nav-links a{
@@ -611,7 +611,7 @@ p{ margin:0; }
   .hero{ min-height:0; padding-top:110px; padding-bottom:48px; }
   .scroll-cue{ display:none; }
   .hud-value{ font-size:1.15rem; }
-  .brand-logo{ height:30px; }
+  .brand-logo{ height:40px; }
 }
 
 /* ============================================================
@@ -775,19 +775,49 @@ p{ margin:0; }
 }
 @media (max-width:860px){ .steps{ grid-template-columns:1fr; } }
 .step{
-  padding:30px 26px;
+  padding:0 26px 30px;
   border:1px solid var(--line);
   border-radius:var(--radius);
   background:rgba(10,16,25,.55);
   backdrop-filter:blur(4px);
+  overflow:hidden;
+  transition:opacity .7s var(--ease), transform .7s var(--ease), border-color .25s;
 }
-.step-index{
+.step:hover{ border-color:rgba(240,178,63,.32); }
+.step-media{
   display:block;
+  position:relative;
+  margin:0 -26px 22px;
+  aspect-ratio:16/9;
+  overflow:hidden;
+  border-bottom:1px solid rgba(240,178,63,.16);
+}
+.step-media::after{
+  content:'';
+  position:absolute; inset:0;
+  background:linear-gradient(180deg, transparent 55%, rgba(15,18,23,.85) 100%);
+}
+.step-media img{
+  width:100%; height:100%;
+  object-fit:cover;
+  display:block;
+  transition:transform .6s var(--ease);
+}
+.step:hover .step-media img{ transform:scale(1.045); }
+.step-index{
+  position:absolute;
+  top:14px; left:14px;
+  z-index:1;
+  display:flex; align-items:center; justify-content:center;
+  width:34px; height:34px;
+  border-radius:50%;
   font-family:var(--font-mono);
-  font-size:.8rem;
-  color:var(--cyan);
-  margin-bottom:16px;
-  letter-spacing:.08em;
+  font-size:.78rem;
+  font-weight:600;
+  letter-spacing:.02em;
+  color:var(--bg-void);
+  background:linear-gradient(135deg, var(--gold-soft), var(--gold));
+  box-shadow:0 0 0 1px rgba(240,178,63,.35), 0 6px 18px rgba(0,0,0,.4);
 }
 .step h3{ font-size:1.1rem; margin-bottom:10px; }
 .step p{ font-size:.92rem; line-height:1.6; }
