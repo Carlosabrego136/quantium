@@ -72,17 +72,29 @@
   function updateParallax() {
     var vh = window.innerHeight;
 
-    bgLayers.forEach(function (layer) {
+    /* Read every element's current position FIRST, then write all the
+       new transforms in a second pass. Interleaving reads (getBoundingClientRect)
+       with writes (style.transform) forces the browser to recompute layout
+       mid-loop on every scroll frame — that's what caused the small jumps/
+       stutter while scrolling. Batching reads then writes avoids that. */
+    var bgRects = bgLayers.map(function (layer) {
+      return layer.parentElement.getBoundingClientRect();
+    });
+    var elRects = elLayers.map(function (el) {
+      return el.getBoundingClientRect();
+    });
+
+    bgLayers.forEach(function (layer, i) {
       var speed = parseFloat(layer.getAttribute("data-speed")) || 0.15;
       var scale = parseFloat(layer.getAttribute("data-scale")) || 1.08;
-      var rect = layer.parentElement.getBoundingClientRect();
+      var rect = bgRects[i];
       var offset = (rect.top + rect.height / 2 - vh / 2) * speed;
       layer.style.transform = "translate3d(0," + offset.toFixed(1) + "px,0) scale(" + scale + ")";
     });
 
-    elLayers.forEach(function (el) {
+    elLayers.forEach(function (el, i) {
       var speed = parseFloat(el.getAttribute("data-speed")) || 0.04;
-      var rect = el.getBoundingClientRect();
+      var rect = elRects[i];
       var centerDelta = rect.top + rect.height / 2 - vh / 2;
       var offset = centerDelta * speed;
       el.style.transform = "translate3d(0," + offset.toFixed(1) + "px,0)";
