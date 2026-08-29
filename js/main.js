@@ -64,39 +64,55 @@
      elements (headings, text, cards, floating accents) each
      drift at their own speed as the page scrolls. Desktop
      only; mobile keeps everything static per brief.
+
+     Positions are measured once (on load/resize) and cached as
+     a document-relative offset, instead of calling
+     getBoundingClientRect() on every scroll frame. Re-reading
+     layout on every frame was the main-thread cost that made
+     scrolling feel stuttery and starved other work (like the
+     matrix-rain interval) of time to run. With cached positions,
+     each scroll frame only does cheap arithmetic.
   --------------------------------------------------------- */
   var bgLayers = Array.prototype.slice.call(document.querySelectorAll(".parallax-layer"));
   var elLayers = Array.prototype.slice.call(document.querySelectorAll("[data-parallax]"));
   var ticking = false;
+  var bgMeasure = [];
+  var elMeasure = [];
+
+  // Text/cards move a little less than before, per request — backgrounds unchanged.
+  var ELEMENT_DAMPING = 0.55;
+
+  function measure(list, useParent) {
+    return list.map(function (el) {
+      var target = useParent ? el.parentElement : el;
+      var rect = target.getBoundingClientRect();
+      return { docTop: rect.top + window.scrollY, height: rect.height };
+    });
+  }
+
+  function remeasureParallax() {
+    bgMeasure = measure(bgLayers, true);
+    elMeasure = measure(elLayers, false);
+  }
 
   function updateParallax() {
     var vh = window.innerHeight;
-
-    /* Read every element's current position FIRST, then write all the
-       new transforms in a second pass. Interleaving reads (getBoundingClientRect)
-       with writes (style.transform) forces the browser to recompute layout
-       mid-loop on every scroll frame — that's what caused the small jumps/
-       stutter while scrolling. Batching reads then writes avoids that. */
-    var bgRects = bgLayers.map(function (layer) {
-      return layer.parentElement.getBoundingClientRect();
-    });
-    var elRects = elLayers.map(function (el) {
-      return el.getBoundingClientRect();
-    });
+    var scrollY = window.scrollY;
 
     bgLayers.forEach(function (layer, i) {
       var speed = parseFloat(layer.getAttribute("data-speed")) || 0.15;
       var scale = parseFloat(layer.getAttribute("data-scale")) || 1.08;
-      var rect = bgRects[i];
-      var offset = (rect.top + rect.height / 2 - vh / 2) * speed;
+      var m = bgMeasure[i];
+      var top = m.docTop - scrollY;
+      var offset = (top + m.height / 2 - vh / 2) * speed;
       layer.style.transform = "translate3d(0," + offset.toFixed(1) + "px,0) scale(" + scale + ")";
     });
 
     elLayers.forEach(function (el, i) {
-      var speed = parseFloat(el.getAttribute("data-speed")) || 0.04;
-      var rect = elRects[i];
-      var centerDelta = rect.top + rect.height / 2 - vh / 2;
-      var offset = centerDelta * speed;
+      var speed = (parseFloat(el.getAttribute("data-speed")) || 0.04) * ELEMENT_DAMPING;
+      var m = elMeasure[i];
+      var top = m.docTop - scrollY;
+      var offset = (top + m.height / 2 - vh / 2) * speed;
       el.style.transform = "translate3d(0," + offset.toFixed(1) + "px,0)";
     });
 
@@ -111,9 +127,17 @@
   }
 
   if (isDesktop && !reduceMotion && (bgLayers.length || elLayers.length)) {
+    remeasureParallax();
     updateParallax();
     window.addEventListener("scroll", requestParallax, { passive: true });
-    window.addEventListener("resize", requestParallax);
+    window.addEventListener("resize", function () {
+      remeasureParallax();
+      requestParallax();
+    });
+    window.addEventListener("load", function () {
+      remeasureParallax();
+      requestParallax();
+    });
   }
 
   /* ---------------------------------------------------------
@@ -239,13 +263,26 @@
       }
     }
 
-    var matrixInterval = setInterval(drawMatrix, isDesktop ? 60 : 140);
+    var matrixFrameGap = isDesktop ? 60 : 140;
+    var matrixLastDraw = 0;
+    var matrixRafId = null;
+
+    function matrixLoop(ts) {
+      if (!matrixLastDraw || ts - matrixLastDraw >= matrixFrameGap) {
+        drawMatrix();
+        matrixLastDraw = ts;
+      }
+      matrixRafId = window.requestAnimationFrame(matrixLoop);
+    }
+    matrixRafId = window.requestAnimationFrame(matrixLoop);
 
     document.addEventListener("visibilitychange", function () {
       if (document.hidden) {
-        clearInterval(matrixInterval);
-      } else {
-        matrixInterval = setInterval(drawMatrix, isDesktop ? 60 : 140);
+        if (matrixRafId) window.cancelAnimationFrame(matrixRafId);
+        matrixRafId = null;
+      } else if (!matrixRafId) {
+        matrixLastDraw = 0;
+        matrixRafId = window.requestAnimationFrame(matrixLoop);
       }
     });
   }
