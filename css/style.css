@@ -302,6 +302,12 @@ p{ margin:0; }
   .section-seam{ margin:-70px 0; backdrop-filter:blur(30px); -webkit-backdrop-filter:blur(30px); }
 }
 
+/* The hero uses an isolated stacking context (for its blend-mode layers),
+   which means anything bleeding upward into its box gets painted over its
+   own content (buttons, badges, the monitoring card) instead of blending
+   behind it. So this seam only bleeds downward into the next section. */
+.section-seam--after-hero{ margin-top:0; }
+
 /* ============================================================
    Eyebrow / typography helpers
    ============================================================ */
@@ -501,7 +507,6 @@ p{ margin:0; }
   padding:140px 0 60px;
   overflow:hidden;
   isolation:isolate;
-  z-index:2;
 }
 .hero-veil{
   position:absolute; inset:0; z-index:1;
