@@ -244,13 +244,13 @@ p{ margin:0; }
    ============================================================ */
 .parallax-layer{
   position:absolute;
-  inset:-5% -3%;
-  background-size:cover;
+  inset:0;
+  background-size:contain;
   background-position:center;
   background-repeat:no-repeat;
   will-change:transform;
   z-index:0;
-  transform:translate3d(0,0,0) scale(1.005);
+  transform:translate3d(0,0,0) scale(1);
   filter:saturate(1.12) contrast(1.02) brightness(1.16);
   -webkit-mask-image:linear-gradient(to bottom, transparent 0%, black 22%, black 78%, transparent 100%);
   mask-image:linear-gradient(to bottom, transparent 0%, black 22%, black 78%, transparent 100%);
@@ -269,7 +269,7 @@ p{ margin:0; }
   filter:saturate(1.06) contrast(1.0) brightness(1.08) blur(0px);
 }
 .parallax-layer--tight{
-  inset:-4% -2%;
+  inset:0;
   background-position:center;
 }
 
