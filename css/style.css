@@ -245,15 +245,15 @@ p{ margin:0; }
 .parallax-layer{
   position:absolute;
   inset:0;
-  background-size:contain;
+  background-size:cover;
   background-position:center;
   background-repeat:no-repeat;
   will-change:transform;
   z-index:0;
   transform:translate3d(0,0,0) scale(1);
   filter:saturate(1.12) contrast(1.02) brightness(1.16);
-  -webkit-mask-image:linear-gradient(to bottom, transparent 0%, black 22%, black 78%, transparent 100%);
-  mask-image:linear-gradient(to bottom, transparent 0%, black 22%, black 78%, transparent 100%);
+  -webkit-mask-image:linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
+  mask-image:linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
 }
 .parallax-layer--dim{ opacity:.78; }
 .parallax-layer--fore{
@@ -271,6 +271,11 @@ p{ margin:0; }
 .parallax-layer--tight{
   inset:0;
   background-position:center;
+}
+
+/* fondo1-pc reads a touch low on desktop — nudge the visible crop upward */
+@media (min-width:721px){
+  [data-bg-desktop="assets/fondo1-pc.jpg"]{ background-position:center 32%; }
 }
 
 /* ============================================================
@@ -1311,8 +1316,8 @@ p{ margin:0; }
     transform:none !important;
     inset:0;
     background-position:center;
-    -webkit-mask-image:linear-gradient(to bottom, transparent 0%, black 26%, black 74%, transparent 100%);
-    mask-image:linear-gradient(to bottom, transparent 0%, black 26%, black 74%, transparent 100%);
+    -webkit-mask-image:linear-gradient(to bottom, transparent 0%, black 32%, black 68%, transparent 100%);
+    mask-image:linear-gradient(to bottom, transparent 0%, black 32%, black 68%, transparent 100%);
   }
   .section{ padding:76px 0; }
   .section-cta{ padding:90px 0; }
