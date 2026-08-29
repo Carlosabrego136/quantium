@@ -501,6 +501,7 @@ p{ margin:0; }
   padding:140px 0 60px;
   overflow:hidden;
   isolation:isolate;
+  z-index:2;
 }
 .hero-veil{
   position:absolute; inset:0; z-index:1;
