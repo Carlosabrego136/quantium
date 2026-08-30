@@ -718,6 +718,28 @@ p{ margin:0; }
   .trust-highlight{ animation:none !important; }
 }
 
+/* Featured row: holds only the banking-credential badge, sized up so it
+   reads as the lead trust signal above the other two pills. */
+.trust-strip--featured{
+  margin:26px auto 0;
+}
+.trust-highlight--big{
+  font-size:1rem;
+  padding:.75em 1.4em;
+  gap:11px;
+  border-width:1.5px !important;
+}
+.trust-highlight--big svg{
+  width:20px; height:20px;
+}
+@media (max-width:640px){
+  .trust-highlight--big{
+    font-size:.88rem;
+    padding:.65em 1.1em;
+    text-align:center;
+  }
+}
+
 .hero-shield{
   position:static;
   z-index:2;
