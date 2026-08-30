@@ -220,6 +220,11 @@
       for (var i = 0; i < columns; i++) {
         drops[i] = prevDrops[i] !== undefined ? prevDrops[i] : Math.floor(Math.random() * -40);
       }
+
+      // Font never changes between frames, only on resize — setting
+      // it once here (instead of inside drawMatrix on every frame)
+      // saves a redundant ctx.font write ~15-60 times a second.
+      mctx.font = fontSize + "px 'JetBrains Mono', monospace";
     }
     sizeMatrixCanvas();
 
@@ -236,7 +241,6 @@
       mctx.fillStyle = "rgba(4,8,13,0.16)";
       mctx.fillRect(0, 0, w, h);
 
-      mctx.font = fontSize + "px 'JetBrains Mono', monospace";
       for (var i = 0; i < columns; i++) {
         var text = glyphs[Math.floor(Math.random() * glyphs.length)];
         var x = i * fontSize;
@@ -293,6 +297,7 @@
     var nodes = [];
     var nodeColors = ["95,212,255", "232,185,94"];
     var linkDist = 0;
+    var linkDistSq = 0;
 
     function sizeNetworkCanvas() {
       var w = window.innerWidth;
@@ -306,6 +311,7 @@
       var density = isDesktop ? 26000 : 42000;
       var count = Math.max(14, Math.min(46, Math.round((w * h) / density)));
       linkDist = Math.min(180, Math.max(110, w / 8));
+      linkDistSq = linkDist * linkDist;
 
       nodes = [];
       for (var i = 0; i < count; i++) {
@@ -347,8 +353,12 @@
           var b = nodes[j];
           var dx = a.x - b.x;
           var dy = a.y - b.y;
-          var dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < linkDist) {
+          var distSq = dx * dx + dy * dy;
+          // Cheap squared-distance check first — most pairs are far
+          // apart and can be skipped without ever calling Math.sqrt,
+          // which is the expensive part of this nested loop.
+          if (distSq < linkDistSq) {
+            var dist = Math.sqrt(distSq);
             var alpha = (1 - dist / linkDist) * 0.16;
             nctx.strokeStyle = "rgba(" + a.c + "," + alpha.toFixed(3) + ")";
             nctx.lineWidth = 1;
