@@ -280,6 +280,65 @@ p{ margin:0; }
 }
 
 /* ============================================================
+   Certification strip — a compact, standalone badge between the
+   Problema and Demo sections. Deliberately not a full .section
+   (no matching background layer, no 110px rhythm) — it's a slim
+   accent strip, so it gets its own lighter vertical padding and
+   its own pair of seams above/below to keep the usual breathing
+   room against the sections on either side.
+   ============================================================ */
+.cert-strip{
+  position:relative;
+  padding:64px 0;
+  overflow:hidden;
+  background:transparent;
+}
+.cert-card{
+  display:flex;
+  align-items:center;
+  gap:28px;
+  max-width:780px;
+  margin:0 auto;
+  padding:32px 38px;
+  border:1px solid rgba(240,178,63,.3);
+  border-radius:var(--radius);
+  background:
+    linear-gradient(150deg, rgba(240,178,63,.08), transparent 60%),
+    rgba(10,16,25,.6);
+  backdrop-filter:blur(5px);
+  -webkit-backdrop-filter:blur(5px);
+  box-shadow:0 0 0 1px rgba(240,178,63,.08), 0 18px 48px rgba(240,178,63,.14);
+}
+.cert-icon{
+  flex:none;
+  width:64px; height:64px;
+  display:flex; align-items:center; justify-content:center;
+  border-radius:50%;
+  color:var(--gold);
+  background:linear-gradient(135deg, var(--gold-soft), var(--gold));
+  box-shadow:0 0 0 1px rgba(240,178,63,.3), 0 8px 24px rgba(240,178,63,.28);
+}
+.cert-icon svg{ width:30px; height:30px; }
+.cert-label{
+  font-family:var(--font-mono);
+  font-size:.72rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--gold-soft);
+  margin-bottom:8px;
+}
+.cert-text{
+  font-size:.94rem;
+  color:var(--text-mid);
+  line-height:1.7;
+}
+.cert-text strong{ color:var(--text-hi); font-weight:600; }
+@media (max-width:640px){
+  .cert-strip{ padding:48px 0; }
+  .cert-card{ flex-direction:column; align-items:flex-start; padding:28px 24px; gap:18px; }
+}
+
+/* ============================================================
    Section seams — sits exactly on the border between two
    sections and heavily blurs that thin band, so whatever hard
    edge two independent backgrounds/masks create at the seam
