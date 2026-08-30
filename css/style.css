@@ -681,7 +681,7 @@ p{ margin:0; }
   filter:drop-shadow(0 0 5px rgba(240,178,63,.5));
 }
 @media (max-width:640px){
-  .trust-strip{ flex-direction:column; align-items:flex-start; gap:10px; }
+  .trust-strip{ flex-direction:column; align-items:center; gap:10px; }
 }
 
 /* The "bancaria" trust badge gets its own brighter gold treatment —
