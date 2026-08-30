@@ -623,7 +623,7 @@ p{ margin:0; }
 }
 .hero-actions{
   display:flex; gap:16px; justify-content:center; flex-wrap:wrap;
-  margin-bottom:16px;
+  margin-bottom:28px;
 }
 .hero-note{
   font-family:var(--font-display);
@@ -632,7 +632,7 @@ p{ margin:0; }
   letter-spacing:.02em;
   max-width:100%;
   width:fit-content;
-  margin:0 auto;
+  margin:28px auto 0;
   padding:.45em .9em;
   border-radius:999px;
   background:
@@ -718,26 +718,37 @@ p{ margin:0; }
   .trust-highlight{ animation:none !important; }
 }
 
-/* Featured row: holds only the banking-credential badge, sized up so it
-   reads as the lead trust signal above the other two pills. */
+/* Featured row: holds only the banking-credential badge, sized up close
+   to the primary CTA button so it reads as the lead trust signal, with
+   generous breathing room above and below so nothing touches it. */
 .trust-strip--featured{
-  margin:26px auto 0;
+  margin:32px auto 0;
 }
 .trust-highlight--big{
-  font-size:1rem;
-  padding:.75em 1.4em;
-  gap:11px;
+  font-size:.9rem;
+  font-weight:600;
+  padding:13px 26px;
+  gap:12px;
   border-width:1.5px !important;
+  line-height:1.3;
 }
 .trust-highlight--big svg{
-  width:20px; height:20px;
+  width:22px; height:22px;
 }
 @media (max-width:640px){
+  .trust-strip--featured{ margin-top:26px; }
   .trust-highlight--big{
-    font-size:.88rem;
-    padding:.65em 1.1em;
+    font-size:.85rem;
+    padding:12px 20px;
     text-align:center;
+    white-space:normal;
   }
+}
+
+/* Second row (windows/mac pill) — pushed further down so it never
+   crowds the hero-note above it. */
+.trust-strip:not(.trust-strip--featured){
+  margin-top:26px;
 }
 
 .hero-shield{
